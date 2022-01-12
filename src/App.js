@@ -1,37 +1,37 @@
 // @ts-nocheck
 import React, { useState } from "react";
-import { Form, Button, Container, Row } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 import "./App.css";
-import ALGO from "components/questions.js";
+import { ALGO, MULTIFORM } from "components/questions.js";
 
 function App() {
   let algo = ALGO;
-  const uri = "https://hook.integromat.com/7vj6pukiguliam4bmjmwp3bwor1ncbzj";
+  const uri =
+    "https://ag5zrwa5e3.execute-api.ap-south-1.amazonaws.com/default/AlgoWeb"; // "https://hook.integromat.com/7vj6pukiguliam4bmjmwp3bwor1ncbzj";
 
   let question = (name, index, expected) => {
     return (
       <Form.Group className="mb-3" controlId={"formBasic" + name}>
         <Form.Label>{name}</Form.Label>
-        {expected === "1" ? (
-          <Form>
-            <div key="inline-radio" className="mb-3">
-              <Form.Check inline type="radio" id={`Yes`} label={`Yes`} />
-              <Form.Check inline type="radio" label={`No`} id={`No`} />
-            </div>
-          </Form>
-        ) : (
-          <Form.Control
-            placeholder=""
-            value={data[index]}
-            onChange={(event) => {
-              return setData([
-                ...data.slice(0, index),
-                event.target.value,
-                ...data.slice(index + 1),
-              ]);
-            }}
-          />
-        )}
+        <Form.Control
+          placeholder=""
+          value={data[index]}
+          onChange={(event) => {
+            return setData([
+              ...data.slice(0, index),
+              event.target.value,
+              ...data.slice(index + 1),
+            ]);
+          }}
+        />
       </Form.Group>
     );
   };
@@ -51,14 +51,15 @@ function App() {
 
     let weights = [];
     let questions = [];
-    questions = questions
-      .concat(algo["layer1"]["questions"])
-      .concat(algo["layer2"]["questions"])
-      .concat(algo["layer3"]["questions"]);
+
     weights = weights
       .concat(algo["layer1"]["weights"])
       .concat(algo["layer2"]["weights"])
       .concat(algo["layer3"]["weights"]);
+
+    for (var i = 1; i <= data.length; i++) {
+      questions.push(`q${i}`);
+    }
 
     let ans = data
       .map((elem, index) => {
@@ -79,8 +80,15 @@ function App() {
     questions.forEach((elem, index) => {
       tmpdata[elem] = data[index].replace(/[^\d\.]*/g, "");
     });
+
+    tmpdata["temp1"] = "";
+    tmpdata["temp2"] = "";
+
     tmpdata["name"] = name;
     tmpdata["score"] = parseInt(ans);
+    tmpdata["form"] = form;
+
+    console.log(tmpdata);
 
     fetch(uri, {
       body: JSON.stringify(tmpdata),
@@ -107,16 +115,48 @@ function App() {
     .concat(algo["layer2"]["expected"])
     .concat(algo["layer3"]["expected"]);
 
+  let sectors = [
+    "Blockchain/Fintech",
+    "Content/Gaming",
+    "DeepTech",
+    "EV - Charging",
+    "Platform - B2B",
+    "Product - B2C",
+    "Platform - B2C",
+  ];
+
   const [data, setData] = useState(Array(temp.length).fill(""));
   const [score, setSubmit] = useState(false);
   const [name, setName] = useState("");
   const [pass, setPass] = useState("");
+  const [form, setForm] = useState("Platform - B2C");
 
   return (
     <>
       {pass !== "1234" ? (
         <Container style={{ maxWidth: "60rem", marginTop: "40vh" }}>
-          <Form.Label>Enter Password</Form.Label>
+          <h4>Select Form</h4>
+          <DropdownButton id="dropdown-basic-button" title={form}>
+            {sectors.map((item) => {
+              return (
+                <Dropdown.Item
+                  onClick={(evt) => {
+                    setForm(evt.target.innerText);
+                    algo["layer1"] = MULTIFORM[evt.target.innerText];
+                    console.log(algo);
+                    console.log(MULTIFORM);
+                  }}
+                >
+                  {item}
+                </Dropdown.Item>
+              );
+            })}
+          </DropdownButton>
+
+          <Row style={{ margin: 10 }}></Row>
+
+          <h4>Enter Password</h4>
+
           <Form.Control
             placeholder=""
             value={pass}
@@ -127,15 +167,26 @@ function App() {
         </Container>
       ) : (
         <Container>
-          <h1 style={{ textAlign: "center", margin: 50 }}>
-            B2C Product Algo Site
-          </h1>
+          <Row>
+            <h1 style={{ textAlign: "center", margin: 50 }}>
+              {form} Algo Site
+            </h1>
+            <Col>
+              <Button
+                onClick={() => {
+                  setPass("");
+                }}
+              >
+                Go back
+              </Button>
+            </Col>
+          </Row>
           <div className="App">
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3" controlId={"formBasic Name"}>
                 <Form.Label>Name of the Company</Form.Label>
                 <Form.Control
-                  placeholder="Name"
+                  placeholder=""
                   value={name}
                   onChange={(event) => {
                     return setName(event.target.value);
