@@ -89,7 +89,10 @@ function App() {
     tmpdata["form"] = form;
 
     console.log(tmpdata);
-
+    if (!ans) {
+      alert("Empty fields detected, please fill them in");
+      return;
+    }
     fetch(uri, {
       body: JSON.stringify(tmpdata),
       credentials: "same-origin",
