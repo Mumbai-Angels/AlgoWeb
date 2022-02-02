@@ -14,7 +14,8 @@ import { ALGO, MULTIFORM } from "components/questions.js";
 
 function App() {
   let algo = ALGO;
-  const uri = process.env.WEBHOOK_URL;
+  const uri = process.env.REACT_APP_WEBHOOK_URL;
+  console.log(process.env.REACT_APP_WEBHOOK_URL);
 
   let question = (name, index, expected) => {
     return (
