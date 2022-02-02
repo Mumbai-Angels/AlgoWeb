@@ -14,8 +14,7 @@ import { ALGO, MULTIFORM } from "components/questions.js";
 
 function App() {
   let algo = ALGO;
-  const uri =
-    "https://ag5zrwa5e3.execute-api.ap-south-1.amazonaws.com/default/AlgoWeb"; // "https://hook.integromat.com/7vj6pukiguliam4bmjmwp3bwor1ncbzj";
+  const uri = process.env.WEBHOOK_URL;
 
   let question = (name, index, expected) => {
     return (
@@ -88,6 +87,8 @@ function App() {
     tmpdata["score"] = parseInt(ans);
     tmpdata["form"] = form;
 
+    let text = new Date().toLocaleString();
+    tmpdata["timestamp"] = text;
     console.log(tmpdata);
     if (!ans) {
       alert("Empty fields detected, please fill them in");
