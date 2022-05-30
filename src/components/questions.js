@@ -24,13 +24,13 @@ var MULTIFORM = {
   DeepTech: {
     questions: [
       "Do they have any lead/contract/grant with Govt/Govt Dept./Govt Companies/other companies? (10 points)",
-      "Do they have the requisite IPR, either applied or granted? (10 points)",
-      "At what stage is the research/product? (5- commercialized, 4 -ready to market/ Clinical trails ongoing and so on ",
+      "Do they have the requisite IPR, either applied or granted? (1-No; 2-applied; 3-granted)",
+      "At what stage is the research/product? (5- commercialized, 4 -ready to market, 3-Clinical trails ongoing, 2-MVP ready, 1-Lab stage ",
       "Revenue Growth MoM",
       "How strong is the USP/MOAT (Out of 10)",
     ],
-    weights: [150, 150, 150, 100, 50],
-    expected: [10, 5, 1, 1, 10],
+    weights: [150, 150, 150, 50, 100],
+    expected: [10, 3, 3, 1, 10],
   },
   "EV - Charging": {
     questions: [
