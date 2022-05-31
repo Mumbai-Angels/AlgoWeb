@@ -127,6 +127,7 @@ function App() {
     "Platform - B2B",
     "Product - B2C",
     "Platform - B2C",
+    "Ed - Tech",
   ];
 
   const [data, setData] = useState(Array(temp.length).fill(""));
