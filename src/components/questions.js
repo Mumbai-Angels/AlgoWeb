@@ -78,14 +78,14 @@ var MULTIFORM = {
   },
   "Ed Tech": {
     questions: [
-      "Charging Station % growth MoM ",
-      "MoM % Growth in total adoption (customers, clients, order value)",
-      "Do they have any Patents either granted/applied? (0 - No/ 1 - Yes)",
-      "No. of charging cycles/ Battery or Product  life/Durability vs Peers (out of 10)/ do they have any tie ups?",
+      "MoM % Growth in total adoption (customers, clients)",
+      "Revenue Growth MoM%",
+      "Burn rate as % of revenue per month",
+      "Tech play in their offering other than live streaming or classes (score lowest 1/2/3 highest)",
       "How strong is the USP/MOAT (Out of 10)",
     ],
-    weights: [150, 150, 150, 100, 50],
-    expected: [5, 5, 10, 10, 10],
+    weights: [150, 100, 150, 150, 100],
+    expected: [20, 10, 50, 3, 10],
   },
    "D2C": {
     questions: [
