@@ -32,7 +32,7 @@ var MULTIFORM = {
     weights: [150, 150, 150, 50, 100],
     expected: [10, 3, 3, 1, 10],
   },
-  "Ed Tech": {
+  "EV - Charghing": {
     questions: [
       "Charging Station % growth MoM ",
       "MoM % Growth in total adoption (customers, clients, order value)",
